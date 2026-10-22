@@ -1,0 +1,21 @@
+</main>
+</div>
+
+<%# для проверки - выезжающая панель корзины, данные корзины хранятся в браузере %>
+<aside id="cart" class="cart-panel">
+    <div class="cart-head">
+        <h3><svg class="ic"><use href="/icons.svg#i-cart"></use></svg>Корзина</h3>
+        <button id="cartClose" class="icon-btn" type="button" title="Закрыть"><svg class="ic"><use href="/icons.svg#i-x"></use></svg></button>
+    </div>
+    <ul id="cartList"></ul>
+    <p class="cart-total">Итого: <b id="cartTotal">0</b> тг</p>
+    <label class="field">Клиент
+        <select id="customerSelect"></select>
+    </label>
+    <button id="checkoutBtn" class="btn" type="button"><svg class="ic"><use href="/icons.svg#i-check"></use></svg>Оформить заказ</button>
+    <p id="cartMessage" class="muted"></p>
+</aside>
+
+<script src="/script.js"></script>
+</body>
+</html>

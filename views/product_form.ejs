@@ -1,0 +1,40 @@
+<%- include("partials/header", { title: heading, active: active }) %>
+
+<h1><%= heading %></h1>
+
+<% if (errors.length > 0) { %>
+    <ul class="errors">
+        <% errors.forEach(function(e) { %><li><%= e %></li><% }) %>
+    </ul>
+<% } %>
+
+<%# для проверки - форма товара, метод POST, multipart нужен для отправки фото %>
+<form method="post" action="<%= action %>" enctype="multipart/form-data" class="form">
+    <label class="field">Название<input type="text" name="name" value="<%= values.name || '' %>" /></label>
+    <label class="field">Описание<input type="text" name="description" value="<%= values.description || '' %>" /></label>
+    <div class="row">
+        <label class="field">Цена<input type="text" name="price" value="<%= values.price || '' %>" /></label>
+        <label class="field">Количество на складе<input type="text" name="stock" value="<%= values.stock === undefined ? '' : values.stock %>" /></label>
+    </div>
+    <div class="row">
+        <label class="field">Артикул (sku)<input type="text" name="sku" value="<%= values.sku || '' %>" /></label>
+        <label class="field">Категория
+            <select name="category_id">
+                <% categories.forEach(function(c) { %>
+                    <option value="<%= c.id %>" <%= String(c.id) === String(values.category_id) ? "selected" : "" %>><%= c.name %></option>
+                <% }) %>
+            </select>
+        </label>
+    </div>
+
+    <div class="field">Фото товара (JPG, PNG, WEBP, до 2 МБ)
+        <% if (currentImage) { %>
+            <img class="form-photo" src="<%= currentImage %>" alt="Текущее фото" />
+        <% } %>
+        <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" />
+    </div>
+
+    <button type="submit" class="btn"><svg class="ic"><use href="/icons.svg#i-check"></use></svg>Сохранить</button>
+</form>
+
+<%- include("partials/footer") %>

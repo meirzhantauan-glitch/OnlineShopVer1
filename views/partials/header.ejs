@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %> - Интернет-магазин</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="layout">
+
+<%# для проверки - левая панель: логотип, меню и кнопка корзины %>
+<aside class="sidebar">
+    <a class="logo" href="/"><svg class="ic"><use href="/icons.svg#i-store"></use></svg><span>Магазин</span></a>
+    <nav>
+        <a href="/" class="<%= active === 'catalog' ? 'active' : '' %>"><svg class="ic"><use href="/icons.svg#i-grid"></use></svg>Каталог</a>
+        <a href="/products/create" class="<%= active === 'add' ? 'active' : '' %>"><svg class="ic"><use href="/icons.svg#i-plus"></use></svg>Добавить товар</a>
+        <a href="/orders" class="<%= active === 'orders' ? 'active' : '' %>"><svg class="ic"><use href="/icons.svg#i-box"></use></svg>Заказы</a>
+        <a href="/about"><svg class="ic"><use href="/icons.svg#i-info"></use></svg>О сайте</a>
+    </nav>
+    <button id="cartToggle" class="cart-toggle" type="button">
+        <svg class="ic"><use href="/icons.svg#i-cart"></use></svg>Корзина <span id="cartCount" class="badge" hidden>0</span>
+    </button>
+</aside>
+
+<main class="content">

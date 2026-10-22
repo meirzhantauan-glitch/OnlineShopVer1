@@ -1,0 +1,31 @@
+<%- include("partials/header", { title: "Заказы", active: active }) %>
+
+<h1>Заказы</h1>
+
+<% orders.forEach(function(o) { %>
+    <div class="order">
+        <div class="order-head">
+            <h3><svg class="ic"><use href="/icons.svg#i-box"></use></svg>Заказ №<%= o.id %></h3>
+            <span class="status status-<%= o.status %>"><%= o.status %></span>
+        </div>
+        <p class="muted"><svg class="ic sm"><use href="/icons.svg#i-user"></use></svg><%= o.customer_name %> · <%= o.created_at %></p>
+        <ul>
+            <% o.items.forEach(function(i) { %>
+                <li><%= i.name %> × <%= i.quantity %> <span class="muted">(<%= i.unit_price %> тг)</span></li>
+            <% }) %>
+        </ul>
+        <p class="price">Сумма: <%= o.total_price %> тг</p>
+        <% if (o.next.length > 0) { %>
+            <%# для проверки - форма смены статуса заказа %>
+            <form method="post" action="/orders/<%= o.id %>/status" class="inline-form">
+                <select name="status">
+                    <% o.next.forEach(function(s) { %><option value="<%= s %>"><%= s %></option><% }) %>
+                </select>
+                <button type="submit" class="btn-quiet">Сменить статус</button>
+            </form>
+        <% } %>
+    </div>
+<% }) %>
+<% if (orders.length === 0) { %><p class="muted">Заказов пока нет</p><% } %>
+
+<%- include("partials/footer") %>

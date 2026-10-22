@@ -1,0 +1,36 @@
+<%- include("partials/header", { title: product.name, active: active }) %>
+
+<%# для проверки - страница товара: фото слева, описание и кнопки справа %>
+<div class="product-page">
+    <div class="photo">
+        <% if (product.image_url) { %>
+            <img src="<%= product.image_url %>" alt="<%= product.name %>" />
+        <% } else { %>
+            <svg class="ic ph"><use href="/icons.svg#i-image"></use></svg>
+        <% } %>
+    </div>
+    <div>
+        <p class="tag"><%= product.category_name %> · <%= product.sku %></p>
+        <h1><%= product.name %></h1>
+        <p><%= product.description %></p>
+        <p class="price big"><%= product.price %> тг</p>
+        <p class="stock <%= product.stock === 0 ? 'out' : '' %>"><%= product.stock === 0 ? 'Нет в наличии' : 'В наличии: ' + product.stock %></p>
+
+        <p>
+            <button class="btn add-to-cart" data-id="<%= product.id %>" data-name="<%= product.name %>" data-price="<%= product.price %>"
+                <%= product.stock === 0 ? "disabled" : "" %>><svg class="ic"><use href="/icons.svg#i-cart"></use></svg>Добавить в корзину</button>
+        </p>
+
+        <p class="actions">
+            <a class="link" href="/products/<%= product.id %>/edit"><svg class="ic"><use href="/icons.svg#i-edit"></use></svg>Изменить</a>
+            <a class="link" href="/api/products/<%= product.id %>"><svg class="ic"><use href="/icons.svg#i-code"></use></svg>JSON</a>
+            <a class="link" href="/api/products/<%= product.id %>/xml"><svg class="ic"><use href="/icons.svg#i-code"></use></svg>XML</a>
+        </p>
+
+        <form method="post" action="/products/<%= product.id %>/delete" onsubmit="return confirm('Удалить товар?')">
+            <button type="submit" class="btn-quiet danger"><svg class="ic"><use href="/icons.svg#i-trash"></use></svg>Удалить товар</button>
+        </form>
+    </div>
+</div>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,42 @@
+<%- include("partials/header", { title: "Каталог", active: active }) %>
+
+<h1>Каталог товаров</h1>
+
+<%# для проверки - форма фильтра отправляет GET-запрос с category и search %>
+<form method="get" action="/" class="filter">
+    <select name="category">
+        <option value="">Все категории</option>
+        <% categories.forEach(function(c) { %>
+            <option value="<%= c.id %>" <%= String(c.id) === String(selectedCategory) ? "selected" : "" %>><%= c.name %></option>
+        <% }) %>
+    </select>
+    <input type="text" name="search" placeholder="Поиск по названию" value="<%= search %>" />
+    <button type="submit" class="btn"><svg class="ic"><use href="/icons.svg#i-search"></use></svg>Найти</button>
+    <a href="/" class="link"><svg class="ic"><use href="/icons.svg#i-refresh"></use></svg>Сбросить</a>
+</form>
+
+<%# для проверки - карточки товаров с фото, ценой, остатком и кнопкой "В корзину" %>
+<div class="grid">
+    <% products.forEach(function(p) { %>
+        <div class="card">
+            <a class="thumb" href="/products/<%= p.id %>">
+                <% if (p.image_url) { %>
+                    <img src="<%= p.image_url %>" alt="<%= p.name %>" />
+                <% } else { %>
+                    <svg class="ic ph"><use href="/icons.svg#i-image"></use></svg>
+                <% } %>
+            </a>
+            <div class="card-body">
+                <p class="tag"><%= p.category_name %></p>
+                <h3><a href="/products/<%= p.id %>"><%= p.name %></a></h3>
+                <p class="price"><%= p.price %> тг</p>
+                <p class="stock <%= p.stock === 0 ? 'out' : '' %>"><%= p.stock === 0 ? 'Нет в наличии' : 'В наличии: ' + p.stock %></p>
+                <button class="btn add-to-cart" data-id="<%= p.id %>" data-name="<%= p.name %>" data-price="<%= p.price %>"
+                    <%= p.stock === 0 ? "disabled" : "" %>><svg class="ic"><use href="/icons.svg#i-cart"></use></svg>В корзину</button>
+            </div>
+        </div>
+    <% }) %>
+</div>
+<% if (products.length === 0) { %><p class="muted">Ничего не найдено</p><% } %>
+
+<%- include("partials/footer") %>
